@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo05">
+    <input v-model="todoInner" v-on:keyup.enter="addTodo"/>
+    <ul>
+        <li v-for="todo in todos">
+            <span>{{todo.text}}</span>
+            <button v-on:click="removeTodo($index)">X</button>
+        </li>
+    </ul>
+</div>
+<script>
+	var demo04 = new Vue({
+		el: "#demo05",
+		data: {
+			todos: [
+				{text: "add some to do item here"}
+			],
+			todoInner: ""
+		},
+		methods: {
+			addTodo: function () {
+				var text = this.todoInner.trim();
+				if (text) {
+					this.todos.push({text: text});
+					this.todoInner = "";
+				}
+			},
+			removeTodo: function (index) {
+				this.todos.splice(index, 1);
+			}
+		}
+	});
+</script>
+</body>
+</html>

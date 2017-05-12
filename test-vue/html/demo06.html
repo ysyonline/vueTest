@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo06">
+
+</div>
+<script>
+	var demo06 = new Vue({
+		el: "#demo06",
+		data: {
+			message: "hello vue.js!",
+		},
+		created: function () {
+			console.log('message is created with:', this.message);
+		}
+	});
+
+	demo06.$watch('message', function (newValue, oldValue) {
+		console.log('message now is:', this.message);
+	});
+</script>
+</body>
+</html>
