@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo12">
+    <my-componnet></my-componnet>
+    <ul>
+        <li v-for="item in 5">
+            <my-componnet></my-componnet>
+        </li>
+    </ul>
+
+    <parent-component></parent-component>
+
+    <easy-view></easy-view>
+</div>
+<div id="app">
+    <my-componnet></my-componnet>
+
+    <easy-view></easy-view>
+</div>
+<script>
+    //定义
+    var MyComponent = Vue.extend({
+        //replace: false,
+        template: "<div>A custom Component</div>"
+    });
+
+    //注册
+    Vue.component("my-componnet", MyComponent);
+
+    //全局的注册 Vue.component();
+    Vue.component("easy-view", {
+        template: "<div>easy Component</div>" //使用语法糖
+    });
+
+    var child = Vue.extend({
+        template: "<span>child</span>"
+    });
+
+    var parent = Vue.extend({
+        template: "<child-component></child-component><p>parent</p>",
+        components: {
+            "child-component": child //针对父组件局部注册子组件
+        }
+    });
+
+
+    var demo12 = new Vue({
+        el: "#demo12",
+        components: {
+            "parent-component": parent //针对该实例局部注册组件
+        }
+    });
+
+    var seeComp = Vue.extend({
+        template: "<p>see comp</p>"
+    });
+    new Vue({
+        el: "#app",
+        components: {
+            "see-comp": seeComp
+        }
+    });
+
+
+</script>
+</body>
+</html>

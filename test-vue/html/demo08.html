@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo08">
+    <input v-model="ok"/>
+
+    <p>{{number + 2}}</p>
+    {{ok === 'ok' ? 'yes':'no'}}
+    <button v-if="ok==='ok'">ok</button>
+    <button :id="number" @click="doSomthing(number)">use</button>
+</div>
+<script>
+    var demo08 = new Vue({
+        el: "#demo08",
+        data: {
+            number: 3,
+            ok: ''
+        },
+        methods: {
+            doSomthing: function (use) {
+                alert("done" + use);
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

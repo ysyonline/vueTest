@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo14">
+    <child msg="hello" name="weixufeng" end-word="goodby!!!"></child>
+    <hr>
+    <input v-model="firstName"/><br/>
+    <message v-bind:msg-content="firstName"></message>
+    <br/>
+    <message :msg-content="firstName"></message>
+    <br/>
+    parent: <input v-model="parValue"/><br/>
+    son:
+    <son :content.once="parValue"></son>
+</div>
+<script>
+    Vue.component("child", {
+        props: ["msg", "name", "endWord"],
+        template: "<span>{{msg}},{{name}},{{endWord}}</span>"
+    });
+
+    Vue.component("message", {
+        props: ["msgContent"],
+        template: "<span>{{msgContent}}</span>"
+    });
+
+    Vue.component("son", {
+        props: ["content"],
+        template: "<input v-model='content'>"
+    });
+
+    var demo14 = new Vue({
+        el: "#demo14",
+        data: {
+            firstName: "hello",
+            parValue: "yu"
+        }
+    });
+</script>
+</body>
+</html>

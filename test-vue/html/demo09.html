@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo09">
+    a={{a}},b={{b}},c={{c}}<br/>
+    f:<input v-model="firstName"/><br/>
+    l:<input v-model="lastName"/><br/>
+    full:<input v-model="fullName" @keyup.enter="clear"/><br/>
+    <input v-model="add1"/> + <input v-model="add2"/> = <input v-model="sum"/>
+</div>
+<script>
+    var demo09 = new Vue({
+        el: "#demo09",
+        data: {
+            a: 1,
+            c: 7,
+            firstName: "Jon",
+            lastName: "Youn",
+            add1: 0,
+            add2: 0,
+            sum: 0
+        },
+        computed: {
+            sum: {
+                get: function () {
+                    return parseInt(this.add1, 10) + parseInt(this.add2, 10);
+                },
+                set: function(newValue){
+                    var sum = parseInt(newValue, 10);
+                    this.add1 = sum - this.add2;
+                    this.add2 = sum - this.add1;
+                }
+            },
+            b: function () {
+                return this.a + 10;
+            },
+            fullName: {
+                get: function () {
+                    return this.firstName + " " + this.lastName
+                },
+                set: function (newValue) {
+                    var names = newValue.split(" ");
+                    this.firstName = names[0];
+                    this.lastName = names[names.length - 1];
+                }
+            }
+        },
+        methods: {
+            clear: function () {
+                if (!this.fullName) {
+                    this.firstName = this.lastName = "";
+                }
+            }
+        }
+    });
+    demo09.$watch('a', function (oldV, newV) {
+        this.c = this.a + 10;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .class-a {
+            border: 1px solid red;
+        }
+
+        .class-b {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+<div id="demo10">
+    <button :class="classObj" :name="name" @click="greet">greet</button>
+    <div @click="divClick">
+        parent
+        <button @click="buttonClick">son</button>
+    </div>
+    <div @click="divClick1">
+        parent1
+        <button @click.stop="buttonClick1">son1</button>
+    </div>
+    <div>
+        <input name="abc" @keyup.q="testKeyUp('test', $event)" v-model="abcText"/>
+    </div>
+
+</div>
+<script>
+    var demo10 = new Vue({
+        el: "#demo10",
+        data: {
+            name: "greet",
+            classObj: {
+                "class-a": true,
+                "class-b": false
+            },
+            abcText: "abc"
+        },
+        methods: {
+            greet: function (event) {
+                alert(event.target.tagName);
+            },
+            divClick: function (event) {
+                alert("div");
+            },
+            buttonClick: function (event) {
+                //event.stopPropagation();
+                alert("button");
+            },
+            divClick1: function (event) {
+                alert("div1");
+            },
+            buttonClick1: function (event) {
+                alert("button1");
+            },
+            testKeyUp: function (test, event) {
+                alert(test);
+                alert(event.target.name);
+                alert(this.abcText);
+            }
+        }
+    });
+</script>
+</body>
+</html>
