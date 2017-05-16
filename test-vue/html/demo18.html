@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo18">
+</div>
+<script>
+	var minx = {
+		created: function () {
+			console.log("the component is created");
+			this.hello();
+		},
+		data: function () {
+			return {"a": 1};
+		},
+		methods: {
+			hello: function () {
+				console.log("hello world");
+			}
+		},
+		template: "<span>this is a speacil template</span>"
+	};
+
+	var MyComponent = Vue.extend({
+		mixins: [minx]
+	});
+	new MyComponent();
+
+	new (Vue.extend({
+		mixins: [{
+			created: function () {
+				console.log("to component...");
+				this.repeatReport();
+			},
+			methods: {
+				repeatReport: function () {
+					console.log("di ... di...")
+				}
+			}
+		}]
+	}));
+
+	new (Vue.extend({
+		created: function () {
+			console.log("From Vue instance ...");
+		},
+		mixins: [{
+			created: function () {
+				console.log("Form Vue created");
+				this.userSay();
+			},
+			methods: {
+				userSay: function () {
+					console.log("user Say");
+				}
+			}
+		}]
+	}));
+
+	Vue.mixin({
+        created: function () {
+            var myselected = this.$options.myselected;
+	        var data = this.$options.data;
+            if(myselected){
+            	console.log(myselected);
+            }
+        }
+    });
+
+	new Vue({
+        data:{
+        	message: "just go"
+        },
+        myselected: "it is my selected"
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo15">
+    <button @click="test">{{message}}</button>
+</div>
+<script>
+	var demo15 = new Vue({
+        el: "#demo15",
+		data: function () {
+			return {
+				message: "you konw why"
+			}
+		},
+		methods: {
+			test: function (event) {
+				const evt = event;
+				alert(evt);
+			}
+		}
+	});
+</script>
+</body>
+</html>

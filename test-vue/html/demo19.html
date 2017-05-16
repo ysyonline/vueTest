@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<button @click="homePage">home</button>
+<button @click="postsPage">posts</button>
+<button @click="archivePage">archive</button>
+<component v-bind:is="currentView" :plus-message="message">
+</component>
+
+<script>
+	var demo19 = new Vue({
+		el: "body",
+		data: function () {
+			return {
+				currentView: "home",
+				message: "here"
+			}
+		},
+		methods: {
+			homePage: function () {
+				this.currentView = "home"
+			},
+			postsPage: function () {
+				this.currentView = "posts"
+			},
+			archivePage: function () {
+				this.currentView = "archive"
+			}
+		},
+		components: {
+			home: {
+				props: ["plusMessage"],
+				template: "<span>home</span>{{plusMessage}}"
+			},
+			posts: {
+				props: ["plusMessage"],
+				template: "<span>posts</span>{{plusMessage}}"
+			},
+			archive: {
+				props: ["plusMessage"],
+				template: "<span>archive</span>{{plusMessage}}"
+			}
+		}
+	});
+
+	let [a, b, c] = [1, 2, 3];
+	console.log(a, b, c);
+</script>
+</body>
+</html>

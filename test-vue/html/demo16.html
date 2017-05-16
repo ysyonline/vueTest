@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo16">
+    <span v-demo="message" v-text="message"></span>,
+    <span v-cat:hello.a="uniq" v-text="uniq"></span>
+    <span v-dog="stus"></span>
+</div>
+
+<script>
+	Vue.directive("demo", {
+		bind: function () {
+			console.log('demo bound!')
+		},
+		update: function (newvalue) {
+			console.log('demo update!')
+		},
+		unbind: function () {
+			console.log('demo unbind!')
+		}
+	});
+
+	Vue.directive("cat", {
+		bind: function () {
+			console.log("v-cat bound");
+		},
+		update: function (newValue, oldValue) {
+			console.log("v-cat update");
+			console.log(newValue);
+			console.log(oldValue, "===========");
+		},
+		unbind: function () {
+			console.log("v-cat unbound");
+		}
+	});
+
+	Vue.directive("dog", {
+		deep: true,
+		update: function (stus) {
+            console.log("stus");
+            console.log(JSON.stringify(stus));
+		}
+	});
+	var demo16 = new Vue({
+		el: "#demo16",
+		data: function () {
+			return {
+				message: "get some skill",
+				uniq: "init uniq",
+                stus: [{name:'xa'},{name:"f"}]
+			}
+		}
+	});
+</script>
+</body>
+</html>

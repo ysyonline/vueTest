@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo17">
+    <input v-model="price" number/>{{price | transform$ 'begin' end }}<br/>
+    <input v-model="userInput"/>{{merge | concat userInput}}
+</div>
+<script>
+	Vue.filter('transform$', function (val, begin, end) {
+		if (!isNaN(val)) {
+			return "$" + val + begin + end;
+		}
+	});
+
+	Vue.filter("concat", function (val, userInput) {
+		return val + "ui_" + userInput;
+	});
+	var demo17 = new Vue({
+		el: "#demo17",
+		data: function () {
+			return {
+				price: "5",
+				end: "@",
+				userInput: "",
+				merge: ""
+			}
+		}
+	});
+</script>
+</body>
+</html>
