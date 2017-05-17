@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo21">
+    {{message | addNewOne | json }}
+    <input v-model="message | addNewOne | json">
+
+    <template v-for="n in 3">aa</template>
+    <br/>
+    <span>{{message | orderBy 'name' | json}}</span>
+    <hr>
+    <span>{{message | orderBy 'all' 'age' | json}}</span>
+    <hr>
+    <span>{{message | filterBy 'li' 'name' | json}}</span>
+    <div v-inper></div>
+</div>
+
+<script>
+	Vue.filter("addNewOne", function (msg) {
+		msg.forEach((item) => {
+			if (item.name == "xiao") {
+				item.name = "ggggg"
+			}
+		});
+		return msg;
+	});
+
+    Vue.directive("inper", {
+    	bind: function () {
+            let vm = this;
+            vm.hello();
+	    },
+        hello: function () {
+            console.log("actucally this is a hello world");
+        }
+    });
+	const demo21 = new Vue({
+		el: "#demo21",
+		data: function () {
+			return {
+				message: [
+					{"name": "xiao", "age": 3},
+					{"name": "li", "age": 12},
+					{"name": "ab", "age": 45},
+					{"name": "biao", "age": 34},
+					{"name": "li", "age": 15},
+				]
+			}
+		}
+	});
+
+</script>
+</body>
+</html>

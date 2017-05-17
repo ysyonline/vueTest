@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo23">
+    <input v-demo type="checkbox" :check="check" :uncheck="uncheck" :val="'working'" checked="checked"/>工作中
+    <input v-demo type="checkbox" :check="check" :uncheck="uncheck" :val="'idel'" checked="checked">闲置
+    <br/>
+    {{workStatus}}
+    <div>{{search}}</div>
+</div>
+<div id="app23">
+    <input type="checkbox" value="working" checked="checked" v-model="workStatus" v-init-style/>工作中
+    <input type="checkbox" value="idel" checked="checked" v-model="workStatus" v-init-style/>闲置
+    <br/>
+    {{workStatus}}
+    <div>{{search}}</div>
+</div>
+<script>
+	var demo23 = new Vue({
+		el: "#demo23",
+		data: function () {
+			return {
+				workStatus: ["working", "idel"]
+			}
+		},
+		methods: {
+			"check": function (val) {
+				console.log("check......", val);
+				this.workStatus.push(val);
+			},
+			"uncheck": function (val) {
+				console.log("uncheck...........", val);
+				this.workStatus = this.workStatus.filter((item) => {
+					return item != val;
+				});
+			}
+		},
+		computed: {
+			"search": function () {
+				return this.workStatus.length === 2 ? "all" : this.workStatus[0];
+			}
+		},
+		directives: {
+			"demo": {
+				params: ["val", "check", "uncheck"],
+				bind: function () {
+					let vm = this;
+					Vue.nextTick(function () {
+						vm.initICheck();
+					});
+				},
+				initICheck: function () {
+					console.log(this.params);
+					let vm = this;
+					var _check = vm.params.check;
+					var _uncheck = vm.params.uncheck;
+					var _val = vm.params.val;
+					this.el.addEventListener("click", function () {
+						console.log("click event");
+						var checked = event.target.checked;
+						if (checked) {
+							_check(_val);
+						} else {
+							_uncheck(_val);
+						}
+					});
+				}
+			}
+		}
+	});
+
+	var app23 = new Vue({
+		el: "#app23",
+		data: function () {
+			return {
+				workStatus: []
+			}
+		},
+		computed: {
+			"search": function () {
+				return this.workStatus.length === 2 ? "all" : this.workStatus[0];
+			}
+		},
+		directives: {
+			"init-style": {
+				bind: function () {
+					let vm = this;
+					Vue.nextTick(function () {
+						vm.initICheck();
+					});
+				},
+				initICheck: function () {
+                    /*$var $el = $(this.el);
+                     el.iCheck({
+                     checkboxClass: 'icheckbox_square-red',
+                     radioClass: 'iradio_square-red',
+                     increaseArea: '20%'
+                     });*/
+					console.log("init checkbox style...");
+				}
+			}
+		}
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo22">
+    <input v-inper check="check" :uncheck="uncheck" :val="val" type="checkbox" checked="checked"/>
+    <div v-example a="hi"></div>
+</div>
+
+
+<script>
+	Vue.directive('example', {
+		params: ['a'],
+		bind: function () {
+			console.log(this.params.a) // -> "hi"
+		}
+	});
+
+	Vue.directive("inper", {
+		params: ['val', 'check', 'uncheck'],
+		bind: function () {
+			let vm = this;
+			vm.$el = this.el;
+			vm.selfDefined = "self defined";
+			console.log("bind the ..");
+			Vue.nextTick(function () {
+				vm.initICheck();
+			});
+		},
+		initICheck: function () {
+			let vm = this;
+			const el = vm.$el;
+			console.log(el);
+		}
+	});
+	const demo22 = new Vue({
+		el: "#demo22",
+		data: function () {
+			return {
+				search:{
+					configuration_status: ''
+                },
+				message: [
+					{"name": "xiao", "age": 3},
+					{"name": "li", "age": 12},
+					{"name": "ab", "age": 45},
+					{"name": "biao", "age": 34},
+					{"name": "li", "age": 15},
+				]
+			}
+		},
+		methods: {
+			check: function () {
+              console.log("this is a check page");
+			}
+		},
+		watch: {
+            "message" : function (val) {
+                if(val.length === 5){
+                	this.search.configuration_status = "all"
+                }else{
+                	this.search.configuration_status = ""
+                }
+            }
+        }
+	});
+
+</script>
+</body>
+</html>
