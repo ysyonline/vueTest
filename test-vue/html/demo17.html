@@ -9,6 +9,17 @@
 <div id="demo17">
     <input v-model="price" number/>{{price | transform$ 'begin' end }}<br/>
     <input v-model="userInput"/>{{merge | concat userInput}}
+    <ul>
+        <li v-for="user in userGroup | orderBy cloum ">
+            {{user.name}}
+        </li>
+    </ul>
+    <hr>
+    <ul>
+        <li v-for="user in userGroup | orderBy cloum -1">
+            {{user.name}}
+        </li>
+    </ul>
 </div>
 <script>
 	Vue.filter('transform$', function (val, begin, end) {
@@ -20,6 +31,7 @@
 	Vue.filter("concat", function (val, userInput) {
 		return val + "ui_" + userInput;
 	});
+
 	var demo17 = new Vue({
 		el: "#demo17",
 		data: function () {
@@ -27,7 +39,9 @@
 				price: "5",
 				end: "@",
 				userInput: "",
-				merge: ""
+				merge: "",
+				userGroup: [{"name": "wang"}, {"name": "zi"}, {"name": "suan"}],
+				cloum: "name"
 			}
 		}
 	});

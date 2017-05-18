@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>$Title$</title>
     <script src="../js/vue.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/plugin/icheck-1.x/icheck.js"></script>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/icheck-1.x/skins/all.css" />
 </head>
 <body>
 <div id="demo23">
@@ -14,7 +17,7 @@
     <div>{{search}}</div>
 </div>
 <div id="app23">
-    <input type="checkbox" value="working" checked="checked" v-model="workStatus" v-init-style/>工作中
+    <input type="checkbox" value="working" checked="checked" v-model="workStatus" v-init-style />工作中
     <input type="checkbox" value="idel" checked="checked" v-model="workStatus" v-init-style/>闲置
     <br/>
     {{workStatus}}
@@ -38,7 +41,10 @@
 				this.workStatus = this.workStatus.filter((item) => {
 					return item != val;
 				});
-			}
+			},
+            "reversMessage":function(){
+				console.log("ffffffff");
+            }
 		},
 		computed: {
 			"search": function () {
@@ -95,13 +101,34 @@
 					});
 				},
 				initICheck: function () {
-                    /*$var $el = $(this.el);
-                     el.iCheck({
-                     checkboxClass: 'icheckbox_square-red',
-                     radioClass: 'iradio_square-red',
-                     increaseArea: '20%'
-                     });*/
+					let $el = $(this.el);
+					el = this.el;
+					$el.iCheck({
+						checkboxClass: 'icheckbox_square-red',
+						radioClass: 'iradio_square-red',
+						increaseArea: '20%'
+					}).on("ifChecked",function () {
+                        //$el.trigger("click");
+                        $el.attr("checked", "checked");
+					}).on("ifUnchecked", function () {
+						$el.attr("checked", "");
+					});
 					console.log("init checkbox style...");
+
+
+/*					let vm = this;
+/!*					var _check = vm.params.check;
+					var _uncheck = vm.params.uncheck;
+					var _val = vm.params.val;*!/*/
+					this.el.addEventListener("click", function () {
+						console.log("click event");
+						var checked = event.target.checked;
+						if (checked) {
+							_check(_val);
+						} else {
+							_uncheck(_val);
+						}
+					});
 				}
 			}
 		}

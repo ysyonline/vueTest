@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/lodash.js"></script>
+</head>
+<body>
+<div id="demo24">
+    {{result | json}}<br>
+    {{r|json}}
+</div>
+<script>
+
+	let login_out = {
+		"/login_out": {}
+	};
+
+	let login = {
+		"/login": {
+			"name": "index", component: {}
+		}
+	};
+	let default_ = {
+		"/": {
+			"name": "index", component: {}
+		}
+	};
+	let bancel = [{"age": "31"}, {"name": "apple"}];
+
+	let merge = _.merge;
+	var result = merge({}, bancel);
+	var r = merge(default_, login, login_out);
+	(new Vue({
+		data: function () {
+			return {
+				result: result,
+				r: r,
+				login_out: login_out
+			}
+		}
+	})).$mount("#demo24");
+</script>
+</body>
+</html>
