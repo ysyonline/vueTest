@@ -1,0 +1,47 @@
+{
+  //任务名称：
+  "name": "aaa",
+  //任务描述：
+  "description": "desc",
+  //标签定义：
+  "tags": ["ido","goin","tech"],
+  //版本
+  "version" : "v2.0.1",
+  //CPU规格
+  "cpus": 12,
+  //内存规格
+  "memory": 50,
+  //环境变量
+  "environments": [
+    {
+      "envName": "JAVA_HOME",
+      "envValue": "/jdk"
+    },
+    {
+      "envName": "Node",
+      "envValue": "/node"
+    }
+  ],
+  //配置
+  "configurations": [
+    {
+      "configName": "startJdk",
+      "configValue": "c.f"
+    },
+    {
+      "configName": "startNode",
+      "configValue": "com.tt"
+    }
+  ],
+  //启动参数
+  "startups": [
+    {
+      "argType": "custom",
+      "value": "-vas -p -Xml"
+    },
+    {
+      "argType": "selection",
+      "value": "file.id"
+    }
+  ]
+}

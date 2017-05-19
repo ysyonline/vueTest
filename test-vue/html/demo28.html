@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<!--child temp-->
+<template id="child-temp">
+    <div @click='notify'>this is a child</div>
+</template>
+
+<template id="parent-temp">
+    <button @click="pkg">pkg</button>
+    <ul>
+        <li v-for="c in childs">
+            <child v-ref:{{c.id}}></child>
+        </li>
+    </ul>
+
+
+</template>
+
+<div id="demo28">
+    <parent></parent>
+</div>
+<script>
+	Vue.component("parent", {
+		data: function () {
+			return {
+				childs: [{cid: "profile", name: "ppp"}, {cid: "star", name: "br"}, {cid: "quck", name: "qu"}]
+			}
+		},
+		template: "#parent-temp",
+		methods: {
+			"pkg": function () {
+				let vm = this;
+				let child = vm.$refs.profile;
+			}
+		}
+	});
+
+	Vue.component("child", {
+		template: "#child-temp",
+		methods: {
+			"notify": function () {
+				this.$dispatch("increate", "child click");
+			}
+		}
+	});
+
+	var demo28 = new Vue({
+		events: {
+			"increate": function (msg) {
+				alert(msg);
+				let vm = this;
+
+			}
+		}
+	}).$mount("#demo28")
+</script>
+</body>
+</html>

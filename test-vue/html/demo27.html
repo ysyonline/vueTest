@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<template id="input-temp">
+    <div>
+        <input v-model="msg" type="text" @keyup.enter="addMsg"/>
+    </div>
+</template>
+<template id="item-temp">
+    <child></child>
+    <ul>
+        <li v-for="msg in message">
+            {{msg.name}}
+            <button @click="delMsg($index)">X</button>
+        </li>
+    </ul>
+
+</template>
+
+<div id="demo27">
+    <button @click="lookup">check</button>
+    <parent></parent>
+</div>
+<script>
+	Vue.component("child", {
+		template: "#input-temp",
+		data: function () {
+			return {
+				msg: "default msg"
+			}
+		},
+		methods: {
+			addMsg: function () {
+				var msg = this.msg.trim();
+				if (msg) {
+					this.$dispatch("child-msg", msg);
+					this.msg = "";
+				}
+			}
+		},
+        events: {
+	        "notify": function (msg) {
+                alert(msg);
+	        }
+        }
+	});
+	Vue.component("parent", {
+		template: "#item-temp",
+		data: function () {
+			return {
+				message: [{name: "abc"}]
+			}
+		},
+		methods: {
+			"delMsg": function (index) {
+				this.message.splice(index, 1);
+			}
+		},
+		events: {
+			"child-msg": function (msg) {
+				alert(msg);
+				if (msg) {
+					this.message.push({
+                        name: msg
+                    });
+					this.$broadcast("notify", "ok,i recvied")
+				}
+			}
+		}
+	});
+
+	demo27 = new Vue({
+        methods: {
+	        lookup: function () {
+                console.log(this.$children);
+	        }
+        },
+        events: {
+        	"child-msg":function (msg) {
+                alert("this is top parent compont");
+	        }
+        }
+    }).$mount("#demo27");
+</script>
+</body>
+</html>

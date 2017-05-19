@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<template id="child-temp">
+    <input v-model='msg'/>
+    <button @click='notify'>dispatch msg</button>
+</template>
+<div id="demo26">
+    <p>Message: {{message | json }}</p>
+    <child></child>
+</div>
+<script>
+
+	Vue.component("child", {
+		data: function () {
+			return {msg: "aaa"}
+		},
+		methods: {
+			notify: function () {
+				if (this.msg.trim()) {
+					this.$dispatch("child-msg", this.msg);
+					this.msg = '';
+				}
+			}
+		},
+		template: "#child-temp"
+	});
+
+	new Vue({
+		el: "#demo26",
+		data: function () {
+			return {
+				message: []
+			}
+		},
+		events: {
+			"child-msg": function (msg) {
+				this.message.push(msg);
+			}
+		}
+	});
+</script>
+</body>
+</html>
