@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<!--child temp-->
+<template id="child-temp">
+    <div @click='notify'>this is a child</div>
+</template>
+
+<template id="mankind-temp">
+    <div v-if="isShow">this is a man kind</div>
+</template>
+<div id="demo28">
+    <child></child>
+    <mankind></mankind>
+</div>
+<script>
+    var child = Vue.extend({
+        template: "#child-temp",
+        methods: {
+        	notify: function () {
+                this.$dispatch("increate", "jeep")
+	        }
+        }
+    });
+
+    var mankind = Vue.extend({
+	    template: "#mankind-temp",
+        data:function () {
+            return{
+	            isShow: false
+            }
+        },
+        events:{
+	    	"increate-show":function () {
+                this.isShow = true;
+		    }
+        }
+    });
+
+	var demo28 = new Vue({
+        components: {child,mankind},
+		events: {
+			"increate": function (msg) {
+				alert(msg);
+				this.$broadcast("increate-show")
+			}
+		}
+	}).$mount("#demo28")
+</script>
+</body>
+</html>

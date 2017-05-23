@@ -12,32 +12,34 @@
 </template>
 <div id="demo26">
     <p>Message: {{message | json }}</p>
-    <child></child>
+    <child :delegate="del"></child>
 </div>
 <script>
 
 	Vue.component("child", {
+		props: ["delegate"],
 		data: function () {
 			return {msg: "aaa"}
 		},
 		methods: {
 			notify: function () {
-				if (this.msg.trim()) {
-					this.$dispatch("child-msg", this.msg);
-					this.msg = '';
-				}
+				alert(this.delegate);
 			}
 		},
 		template: "#child-temp"
 	});
 
-	new Vue({
+	var demo26 = new Vue({
 		el: "#demo26",
 		data: function () {
 			return {
-				message: []
+				message: ["ddd"],
+				del: this
 			}
 		},
+        created: function () {
+          console.log("kkkkkkk");
+        },
 		events: {
 			"child-msg": function (msg) {
 				this.message.push(msg);
