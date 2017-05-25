@@ -19,6 +19,8 @@
 <div id="app23">
     <input type="checkbox" value="working" checked="checked" v-model="workStatus" v-init-style />工作中
     <input type="checkbox" value="idel" checked="checked" v-model="workStatus" v-init-style/>闲置
+	<input type="radio" v-init-style name="aa" id="ff"><label for="ff">ff</label>
+	<input type="radio" v-init-style name="aa" id="mm"><label for="mm">mm</label>
     <br/>
     {{workStatus}}
     <div>{{search}}</div>
@@ -104,7 +106,7 @@
 					let $el = $(this.el);
 					el = this.el;
 					$el.iCheck({
-						checkboxClass: 'icheckbox_square-red',
+						checkboxClass: 'icheckbox_square-yellow',
 						radioClass: 'iradio_square-red',
 						increaseArea: '20%'
 					}).on("ifChecked",function () {
