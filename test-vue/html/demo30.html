@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo30">
+    <input type="checkbox" v-demo :ifcheck="tellMe" :uncheck="tellYou" :targeted="'fff'"/>
+</div>
+<script>
+
+    let demo = {
+        params:["ifcheck", "uncheck", "targeted"],
+        bind: function(){
+            console.log(this.params.targeted);
+            Vue.nextTick(this.nextTick());
+        },
+        nextTick: function(){
+            let vm = this;
+            vm.el = this.el;
+            vm._ifcheck = vm.params.ifcheck;
+            vm._uncheck = vm.params.uncheck;
+            vm.el.addEventListener("click",function(){
+                if(event.target.checked){
+                    vm._ifcheck(vm.params.targeted);
+                }
+                else{
+                    vm._uncheck(vm.params.targeted);
+                }
+            })
+        }
+    };
+    (new Vue({
+        methods:{
+            tellMe: function(){
+                alert("tellMe");
+            },
+            tellYou: function(){
+                alert("tellYou");
+            }
+        },
+        directives:{
+            "demo":demo
+        }
+    })).$mount("#demo30");
+
+
+</script>
+</body>
+</html>

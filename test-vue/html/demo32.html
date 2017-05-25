@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo32">
+
+</div>
+
+<script>
+    function padZear(d){
+        d = ""+d;
+        if(d.length <2 ){
+            d = "0"+d;
+        }
+        return d;
+    }
+    (function () {
+        var s = "2017-05-25 23:07:04";
+        var s = s.replace("/\-/g", "/");
+        var date = new Date(s);
+        var tm = date.getTime();
+        console.log(tm);
+
+
+        date = new Date(tm);
+        let y = date.getFullYear();
+
+        let m = padZear(date.getMonth() + 1);
+        let d = padZear(date.getDate());
+        let hh = padZear(date.getHours());
+        let ii = padZear(date.getMinutes());
+        let ss = padZear(date.getSeconds());
+
+        s = y+"-"+m+"-"+d+" "+hh+":"+ii+":"+ss
+        console.log(s);
+    })();
+
+</script>
+</body>
+</html>

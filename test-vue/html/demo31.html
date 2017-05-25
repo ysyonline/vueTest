@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="demo31">
+    <input v-demo type="checkbox" :check="tellme" :uncheck="tellyou" :val="'working'" />工作中
+</div>
+
+<script>
+    var demo31 = new Vue({
+        methods: {
+            "tellme": function (val) {
+                console.log("check......", val);
+            },
+            "tellyou": function (val) {
+                console.log("uncheck...........", val);
+            }
+        },
+        directives: {
+            "demo": {
+                params: ["val", "check", "uncheck"],
+                bind: function () {
+                    let vm = this;
+                    console.log(this.params);
+                }
+            }
+        }
+    }).$mount("#demo31");
+
+</script>
+</body>
+</html>
