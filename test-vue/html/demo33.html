@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<template id="optical-temp">
+    <input type='text' v-model="inner" v-keydown-input :delgate="delgate" :red="red"/>
+</template>
+<div id="demo33">
+    <button v-ifcheck :blue="blue" :delgate="delgate">blue</button>
+    <optical :green="green"></optical>
+</div>
+<script>
+
+    var optical = {
+        props: ["green"],
+        template: "#optical-temp",
+        data: function () {
+            console.log("optical...data...");
+            let _delgate = this;
+            return {
+                delgate: _delgate,
+                inner: "abc"
+            }
+        },
+        created: function () {
+            console.log("optical...created...");
+        },
+        ready: function(){
+            let el = this.$el;
+            console.log("optical...ready...");
+            el.style.background="red";
+        },
+        methods: {
+            "red": function () {
+                alert("red");
+                this.green();
+            }
+        },
+        directives: {
+            keydownInput: {
+                params: ["delgate"],
+                bind: function () {
+                    let _delgate = this.params.delgate;
+                    let el = _delgate.$el;
+                    el.addEventListener("click", function () {
+                        _delgate.red();
+                    });
+
+                }
+            }
+        }
+    };
+
+
+    var ifcheck = {
+        params: ['delgate'],
+        bind: function () {
+            let _delgate = this.params.delgate;
+            let el = _delgate.$el;
+            el.addEventListener("click", function () {
+                _delgate.blue();
+            });
+        },
+        unbind: function () {
+        }
+    };
+
+    demo33 = new Vue({
+        el: "#demo33",
+        data: function () {
+            let _delgate = this;
+            return {
+                delgate: _delgate
+            };
+        },
+        methods: {
+            blue: function () {
+                alert("blue");
+            },
+            green: function(){
+                alert("green");
+            }
+        },
+        components: {
+            optical: optical
+        },
+        directives: {
+            "ifcheck": ifcheck
+        }
+
+
+    });
+</script>
+</body>
+
+
+</html>

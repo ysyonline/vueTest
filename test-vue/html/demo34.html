@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .clock-head {
+            border: 1px solid red
+        }
+
+        .clock-body {
+            border: 1px solid black
+        }
+
+        .clock-foot {
+            border: 1px solid green
+        }
+        .cur-date{
+            background-color: lightseagreen;
+        }
+        .other-date{
+            color:#999999;
+        }
+    </style>
+</head>
+<body>
+<div id="demo34">
+    <div class="clock-content">
+        <div class="clock-head">head
+            {{timer.year}}年{{timer.mon}}月<span>></span>
+        </div>
+        <div class="clock-body">body
+            <table>
+                <thead>
+                <tr>
+                    <th>日</th>
+                    <th>一</th>
+                    <th>二</th>
+                    <th>三</th>
+                    <th>四</th>
+                    <th>五</th>
+                    <th>六</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="week in weekPanel">
+                    <td v-for="n in 7" :class="[(week[n]['date'] === timer.date)?'cur-date': (week[n]['mon'] !== timer.mon ?'other-date':'')]">{{week[n]['date']}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="clock-foot">foot</div>
+    </div>
+
+</div>
+<script>
+    (new Vue({
+        created: function () {
+            console.log("created");
+        },
+        data: function () {
+
+            let _timer = this.getTimerManger();
+            let _datePanel = this.getDatePanel();
+            let _weekPanel = this.getWeekPanel();
+            return {
+                timer: _timer,
+                datePanel: _datePanel,
+                weekPanel: _weekPanel
+            };
+
+        },
+        methods: {
+            getWeekPanel: function () {
+                let _datePanel = this.getDatePanel();
+                let _weekPannel = [];
+                let _week;
+                for (let i = 0; i < _datePanel.length; i++) {
+                     if( i % 7 === 0){
+                         _week = {};
+                         _weekPannel.push(_week);
+                     }
+                    _week[i % 7] = _datePanel[i];
+                }
+                return _weekPannel;
+            },
+            getDatePanel: function () {
+                let _dayStr = ["日", "一", "二", "三", "四", "五", "六"];
+                let _datePanel = [];
+                let _timer = this.getTimerManger();
+                for (let i = 1, dates = this.getDates(); i <= dates; i++) {
+                    _datePanel.push({date:i,mon:_timer.mon});
+                }
+                let fsDay = _timer.firstDateDay;
+                let indexFs = _dayStr.indexOf(fsDay);
+                let prePadding = indexFs;
+                let nextPadding = 42 - prePadding - this.getDates();
+                let preMonthDates = this.getPreMonthDates();
+                for (let i = preMonthDates; i > preMonthDates - prePadding; i--) {
+                    _datePanel.unshift({date:preMonthDates,mon:"pre"});
+                }
+                for (let i = 1; i < nextPadding + 1; i++) {
+                    _datePanel.push({date:i,mon:"next"});
+                }
+                return _datePanel;
+            },
+            /* support 0,1,2
+             * 0:current Date
+             * 1:last Date
+             * 2:next Date
+             * */
+            getTimerManger: function () {
+                let _dayStr = ["日", "一", "二", "三", "四", "五", "六"];
+                let _currentTime = new Date(), _year = _currentTime.getFullYear(), _mon = 1 + _currentTime.getMonth(), _date = _currentTime.getDate(), _hour = _currentTime.getHours(), _min = _currentTime.getMinutes(), _second = _currentTime.getSeconds();
+                let _day = _currentTime.getDay();
+                _currentTime.setDate(1);
+                let _fistDateDay = _currentTime.getDay();
+                let _dates = this.getDates();
+                _currentTime.setDate(_dates);
+                let _lastDateDay = _currentTime.getDay();
+                return {
+                    "lastDateDay": _dayStr[_lastDateDay],
+                    "dates": _dates,
+                    "firstDateDay": _dayStr[_fistDateDay],
+                    "day": _dayStr[_day],
+                    "year": _year,
+                    "mon": _mon,
+                    "date": _date,
+                    "hour": _hour,
+                    "min": _min,
+                    "sec": _second,
+                    "timeStap": _year + "/" + _mon + "/" + _date + " " + _hour + ":" + _min + ":" + _second
+                };
+            },
+            /*'2017/12/8 18:43:32'*/
+            timeStap2Date: function (str) {
+            },
+            getDates: function () {
+                let nows = new Date();
+                nows.setDate(1);
+                nows.setMonth(nows.getMonth() + 1)
+                let date = new Date((nows - 3600 * 1000 * 24));
+                return date.getDate();
+            },
+            getPreMonthDates: function () {
+                let nows = new Date();
+                nows.setDate(1);
+                let date = new Date((nows - 3600 * 1000 * 24));
+                return date.getDate();
+            },
+            getNextMonthDates: function () {
+                let nows = new Date();
+                nows.setDate(this.getDates());
+                let date = new Date(nows + 3600 * 1000 * 24);
+                return date.getDate();
+            }
+        }
+    })).$mount("#demo34");
+</script>
+</body>
+</html>
